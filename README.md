@@ -1,5 +1,15 @@
 # project-2
+
 ​
+
+## NEW IDEA
+
+This app will work as a database of patients and disease. A doctor can create a patient by inserting the patients information, symptoms and vitals. The app will then read through disease table and determine which disease is ailing the patient. The doctor may also see the status of all patients and update the status of all patients. The doctor may also view a cheat sheet of all the disease and their symptoms read from the diseases table.
+
+EXTRA: The app can also simulate the changing vitals of the patient and it will change the patient's disease.
+
+## OLD STUFF
+
 This is a gameified app that simulates a pandemic-time hospital.
 The app uses a database to keep track of checked in patients and their personal information and health conditions.
 The database would have a true/false status for COVID infections.

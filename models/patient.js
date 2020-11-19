@@ -1,11 +1,9 @@
 module.exports = function (Sequelize, DataTypes) {
   const Patient = Sequelize.define('Patient', {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+    admittedDate: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
     },
-    admittedDate: Sequelize.DATE,
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -65,5 +63,8 @@ module.exports = function (Sequelize, DataTypes) {
       allowNull: false,
     },
   })
+  Patient.associate = function (models) {
+    Patient.belongsTo(models.Disease, { foreignKey: { allowNull: true } })
+  }
   return Patient
 }
