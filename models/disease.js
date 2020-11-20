@@ -20,8 +20,5 @@ module.exports = function (Sequelize, DataTypes) {
       },
     },
   })
-  Disease.associate = function (models) {
-    Disease.hasMany(models.Patient)
-  }
   return Disease
 }
