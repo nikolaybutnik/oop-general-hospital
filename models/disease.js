@@ -20,7 +20,6 @@ module.exports = function (Sequelize, DataTypes) {
       },
     },
   })
-  
   Disease.sync()
   return Disease
 }

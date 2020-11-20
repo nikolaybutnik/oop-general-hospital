@@ -22,10 +22,10 @@ router.post('/api/patient', async (req, res) => {
 })
 
 // Define an api route to display all patients in the database.
-router.get('/api/allpatients', async (req, res) => {
+router.get('/api/patient', async (req, res) => {
   try {
     const info = await db.Patient.findAll()
-    const infoParsed = info.map(element => element.dataValues)
+    const infoParsed = info.map((element) => element.dataValues)
     console.log(infoParsed)
     res.json(infoParsed)
   } catch (err) {
