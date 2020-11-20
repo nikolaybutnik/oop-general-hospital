@@ -7,12 +7,13 @@ const express = require('express')
 const router = express.Router()
 
 // Define an api route to generate new patient. Render the patient to index.handlebars.
-router.get('/api/newpatient', async (req, res) => {
+router.post('/api/patient', async (req, res) => {
   try {
     const info = await db.Patient.generatePatient()
     const createPatient = await db.Patient.create(info)
     // console.log(createPatient)
-    res.render('index', { data: createPatient.dataValues })
+    res.json(createPatient)
+    // res.render('index', { data: createPatient.dataValues })
   } catch (err) {
     if (err) {
       console.log(err)
@@ -21,10 +22,10 @@ router.get('/api/newpatient', async (req, res) => {
 })
 
 // Define an api route to display all patients in the database.
-router.get('/api/allpatients', async (req, res) => {
+router.get('/api/patient', async (req, res) => {
   try {
     const info = await db.Patient.findAll()
-    const infoParsed = info.map(element => element.dataValues)
+    const infoParsed = info.map((element) => element.dataValues)
     console.log(infoParsed)
     res.json(infoParsed)
   } catch (err) {
@@ -34,19 +35,13 @@ router.get('/api/allpatients', async (req, res) => {
   }
 })
 
-router.post('/api/patient', (req, res) => {
-  const patient = req.body
-  db.Disease.findOne({
-    where: {
-      maxTemperature: { $lte: patient.temperature },
-      minTemperature: { $gte: patient.temperature },
-      nausea: patient.nausea,
-      dehydration: patient.dehydration,
-      diarrhea: patient.diarrhea,
-    },
-  })
-  db.Patient.create(patient).then(() => {
-    res.status(200)
+router.put('/api/patient/:id', (req, res) => {
+  const patientId = req.params.id
+  db.Patient.update(
+    { healthStatus: 'recovered' },
+    { where: { id: patientId } }
+  ).then((patient) => {
+    res.json(patient)
   })
 })
 

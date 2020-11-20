@@ -91,7 +91,6 @@ module.exports = function (sequelize, DataTypes) {
         age: patient.results[0].dob.age,
         condition: condition.name,
       }
-      console.log(newPatient)
       return newPatient
     }
   }
@@ -134,7 +133,6 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 'sick',
       },
-
     },
     { sequelize }
   )
