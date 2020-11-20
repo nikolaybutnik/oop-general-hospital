@@ -1,36 +1,30 @@
-// Requiring necessary npm packages
+// Load dependency modules
 const express = require('express')
-const session = require('express-session')
-// Requiring passport as we've configured it
-const passport = require('./config/passport')
+const exphbs = require('express-handlebars')
 
-// Setting up port and requiring models for syncing
-const PORT = process.env.PORT || 8080
-const db = require('./models')
-
-// Creating express app and configuring middleware needed for authentication
+// Create the Express app instance
 const app = express()
+
+// Use the express.static middleware to serve static content
+// from the "./public" directory in the application structure.
+app.use(express.static('public'))
+
+// Set up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(express.static('public'))
-// We need to use sessions to keep track of our user's login status
-app.use(
-  session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
-)
-app.use(passport.initialize())
-app.use(passport.session())
 
-// Requiring our routes
-require('./controllers/html-routes.js')(app)
-require('./controllers/api-routes.js')(app)
+// Set up the Express app to use the Handlebars template engine
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
 
-// Syncing our database and logging a message to the user upon success
-db.sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(
-      '==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.',
-      PORT,
-      PORT
-    )
-  })
+// Handle all dynamic routes with our controller
+app.use(require('./controllers/api-routes'))
+
+// Set the port of our application
+// process.env.PORT lets the port be set by Heroku
+const PORT = process.env.PORT || 3000
+// Start our server so that it can begin listening to client requests.
+app.listen(PORT, () => {
+  // Log (server-side) when our server has started
+  console.log(`Server listening on: http://localhost:${PORT}`)
 })
