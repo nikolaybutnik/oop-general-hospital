@@ -17,8 +17,10 @@
   "dependencies": {
     "bcryptjs": "2.4.3",
     "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
     "mysql2": "^2.2.5",
+    "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "sequelize": "^5.22.3"
@@ -29,12 +31,12 @@
     "cross-env": "^7.0.2",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
-    "mocha": "^8.2.1",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.1.0",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2"
   }
