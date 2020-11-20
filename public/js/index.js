@@ -69,3 +69,17 @@ function dischargePatient(event) {
       renderPatientsTable()
     })
 }
+
+// This script handles the submission of the Admit Patient button (form)
+// The event triggers a post request to the /api/patient route to generate
+// a new patient and add them to the database.
+document.getElementById('admit').addEventListener('submit', function (event) {
+  event.preventDefault()
+  fetch('/api/patient', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  }).then((response) => {
+    // console.log(response)
+    renderPatientsTable()
+  })
+})

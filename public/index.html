@@ -33,7 +33,14 @@
       </p>
     </div>
 
+    <!-- A button that shows a log of all sick patients -->
     <button id="log">Log</button>
+
+    <!-- A button that makes a post request to /api/patient route whci generates a new patient and adds them to database -->
+    <form id= "admit" action="/api/patient" method="post">
+      <button name="admit" value="admit">Admit Patient</button>
+    </form>
+
     <table id="patientsTable">
       <thead>
         <tr>

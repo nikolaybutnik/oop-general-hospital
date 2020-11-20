@@ -11,12 +11,11 @@ router.post('/api/patient', async (req, res) => {
   try {
     const info = await db.Patient.generatePatient()
     const createPatient = await db.Patient.create(info)
-    // console.log(createPatient)
-    res.json(createPatient)
-    // res.render('index', { data: createPatient.dataValues })
+    // console.log(createPatient.dataValues)
+    res.status(201).json(createPatient.dataValues)
   } catch (err) {
     if (err) {
-      console.log(err)
+      res.status(500).json(err)
     }
   }
 })
@@ -26,11 +25,11 @@ router.get('/api/patient', async (req, res) => {
   try {
     const info = await db.Patient.findAll()
     const infoParsed = info.map((element) => element.dataValues)
-    console.log(infoParsed)
-    res.json(infoParsed)
+    // console.log(infoParsed)
+    res.status(200).json(infoParsed)
   } catch (err) {
     if (err) {
-      console.log(err)
+      res.status(500).json(err)
     }
   }
 })
