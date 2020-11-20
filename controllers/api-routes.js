@@ -3,14 +3,21 @@
 // const passport = require('../config/passport')
 const db = require('../models')
 const express = require('express')
-const Patient = require('../models/new_patient')
+// const Patient = require('../models/new_patient')
 const router = express.Router()
 
-// Define an api route to generate new patient.
+// Define an api route to generate new patient. Render the patient to index.handlebars.
 router.get('/api/newpatient', async (req, res) => {
-  // const data = await Patient.generatePatientPhoto()
-  const info = await Patient.generatePatient()
-  res.render('index', { data: info })
+  try {
+    const info = await db.Patient.generatePatient()
+    const createPatient = await db.Patient.create(info)
+    // console.log(createPatient)
+    res.render('index', { data: createPatient.dataValues })
+  } catch (err) {
+    if (err) {
+      console.log(err)
+    }
+  }
 })
 
 router.get('/api/patient', (req, res) => {
