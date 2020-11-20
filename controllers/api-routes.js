@@ -44,7 +44,17 @@ module.exports = function (app) {
   })
 
   app.post('/api/patient', (req, res) => {
-    db.Patient.create(req.body).then(() => {
+    const patient = req.body
+    db.Disease.findOne({
+      where: {
+        maxTemperature: { $lte: patient.temperature },
+        minTemperature: { $gte: patient.temperature },
+        nausea: patient.nausea,
+        dehydration: patient.dehydration,
+        diarrhea: patient.diarrhea,
+      },
+    })
+    db.Patient.create(patient).then(() => {
       res.status(200)
     })
   })
