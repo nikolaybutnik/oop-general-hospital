@@ -1,7 +1,6 @@
 // Requiring our models and passport as we've configured it
 const db = require('../models')
 const passport = require('../config/passport')
-const patient = require('../models/patient')
 
 module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -45,7 +44,7 @@ module.exports = function (app) {
   })
 
   app.post('/api/patient', (req, res) => {
-    let patient = req.body
+    const patient = req.body
     db.Disease.findOne({
       where: {
         maxTemperature: { $lte: patient.temperature },

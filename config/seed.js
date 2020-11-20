@@ -1,6 +1,6 @@
 const db = require('../models')
 
-let diseases = [
+const diseases = [
   {
     name: 'Fish Odor Syndrome',
     minTemperature: 30,
