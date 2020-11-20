@@ -94,10 +94,6 @@ module.exports = function (sequelize, DataTypes) {
       console.log(newPatient)
       return newPatient
     }
-
-    static associate(models) {
-      Patient.belongsTo(models.Disease, { foreignKey: { allowNull: true } })
-    }
   }
 
   Patient.init(
@@ -138,6 +134,7 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 'sick',
       },
+
     },
     { sequelize }
   )

@@ -20,10 +20,18 @@ router.get('/api/newpatient', async (req, res) => {
   }
 })
 
-router.get('/api/patient', (req, res) => {
-  db.Patient.findAll().then((patients) => {
-    res.json(patients)
-  })
+// Define an api route to display all patients in the database.
+router.get('/api/allpatients', async (req, res) => {
+  try {
+    const info = await db.Patient.findAll()
+    const infoParsed = info.map(element => element.dataValues)
+    console.log(infoParsed)
+    res.json(infoParsed)
+  } catch (err) {
+    if (err) {
+      console.log(err)
+    }
+  }
 })
 
 router.post('/api/patient', (req, res) => {
