@@ -34,13 +34,19 @@
       </p>
     </div>
 
+    <!-- Empty div for progress bar. -->
     <div id="myProgress">
       <div id="myBar"></div>
     </div>
-    <!-- <button onclick="move()">Click Me</button>  -->
-
+    
     <!-- A button that shows a log of all sick patients -->
-    <button id="log">Log</button>
+    <button id="logSick">Sick Patients</button>
+
+    <!-- A button that shows a log of recovered patients -->
+    <button id="logRecovered">Recovered Patients</button>
+
+    <!-- A button that shows a log of all dead patients -->
+    <button id="logDead">Dead Patients</button>
 
     <!-- A button that makes a post request to /api/patient route whci generates a new patient and adds them to database -->
     <form id= "admit" action="/api/patient" method="post">
