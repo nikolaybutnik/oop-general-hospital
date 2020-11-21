@@ -1,3 +1,4 @@
+// Reference the Log - Sick button and assign a click event.
 const logButton = document.getElementById('log')
 logButton.addEventListener('click', renderPatientsTable)
 
@@ -61,6 +62,8 @@ function renderPatientsTable() {
       }
     })
 }
+
+// A function for the 'Discharge' button that sets the patient's status from 'sick' to 'recovered'.
 function dischargePatient(event) {
   const patientId = event.target.getAttribute('data-patientid')
   fetch('/api/patient/' + patientId, { method: 'PUT' })
@@ -83,3 +86,30 @@ document.getElementById('admit').addEventListener('submit', function (event) {
     renderPatientsTable()
   })
 })
+
+// Progress bar
+async function capacityBar() {
+  // Get an array of all currently sick patients.
+  const response = await fetch('/api/patient', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  const allpatients = await response.json()
+  const sickpatients = await allpatients.filter(
+    (patient) => patient.healthStatus === 'sick'
+  )
+  // console.log(allpatients)
+  // console.log(sickpatients)
+  // Set the maximum capacity of the hospital.
+  const maxCapacity = 200
+  // caclulate the percentage of currently sick patients that occupy the hospital.
+  const percentage = Math.ceil((sickpatients.length / maxCapacity) * 100)
+
+  const elem = document.getElementById('myBar')
+  const width = percentage
+
+  elem.style.width = width + '%'
+  elem.innerHTML = width + '%'
+}
+
+capacityBar()
