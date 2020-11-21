@@ -1,6 +1,12 @@
 // Reference the Log - Sick button and assign a click event.
-const logButton = document.getElementById('log')
-logButton.addEventListener('click', renderPatientsTable)
+const logSickButton = document.getElementById('logSick')
+logSickButton.addEventListener('click', renderPatientsTable)
+// Reference the Log - Recovered button and assign a click event.
+const logRecoveredButton = document.getElementById('logRecovered')
+logRecoveredButton.addEventListener('click', renderPatientsTable)
+// Reference the Log - Sick button and assign a click event.
+const logDeadButton = document.getElementById('logDead')
+logDeadButton.addEventListener('click', renderPatientsTable)
 
 function renderPatientsTable() {
   fetch('/api/patient')
