@@ -58,7 +58,7 @@ function renderPatientsTable() {
 
         patientDischargeButton = document.createElement('td')
         dischargeButton = document.createElement('button')
-        dischargeButton.innerHTML = 'Discharge'
+        dischargeButton.innerHTML = 'Cure Patient'
         dischargeButton.setAttribute('data-patientId', patient.id)
         dischargeButton.addEventListener('click', dischargePatient)
         patientDischargeButton.appendChild(dischargeButton)
@@ -69,14 +69,42 @@ function renderPatientsTable() {
     })
 }
 
-// A function for the 'Discharge' button that sets the patient's status from 'sick' to 'recovered'.
+// A function for the 'Cure Patient' button that sets the patient's status from 'sick' to 'recovered' if the
+// operation is a success, but has a 1 in 10 chance of killing the patient.
 function dischargePatient(event) {
-  const patientId = event.target.getAttribute('data-patientid')
-  fetch('/api/patient/' + patientId, { method: 'PUT' })
-    .then((response) => response.json())
-    .then((patient) => {
-      renderPatientsTable()
+  const liveOrDie = Math.floor(Math.random() * 10) + 1
+  console.log(liveOrDie)
+  // If the random number is 1, the patient dies.
+  if (liveOrDie === 1) {
+    const patientId = event.target.getAttribute('data-patientid')
+    fetch('/api/patient/' + patientId, {
+      body: JSON.stringify({ healthStatus: 'dead' }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
     })
+      .then((response) => response.json())
+      .then((patient) => {
+        renderPatientsTable()
+      })
+  } else {
+    // If the random number is other than 1, the patient recovers.
+    const patientId = event.target.getAttribute('data-patientid')
+    fetch('/api/patient/' + patientId, {
+      body: JSON.stringify({ healthStatus: 'recovered' }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+    })
+      .then((response) => response.json())
+      .then((patient) => {
+        renderPatientsTable()
+      })
+  }
 }
 
 // This script handles the submission of the Admit Patient button (form)
