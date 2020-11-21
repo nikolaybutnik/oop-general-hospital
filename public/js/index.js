@@ -3,10 +3,10 @@ const logSickButton = document.getElementById('logSick')
 logSickButton.addEventListener('click', renderPatientsTable)
 // Reference the Log - Recovered button and assign a click event.
 const logRecoveredButton = document.getElementById('logRecovered')
-logRecoveredButton.addEventListener('click', renderPatientsTable)
+logRecoveredButton.addEventListener('click', renderRecoveredPatientsTable)
 // Reference the Log - Sick button and assign a click event.
 const logDeadButton = document.getElementById('logDead')
-logDeadButton.addEventListener('click', renderPatientsTable)
+logDeadButton.addEventListener('click', renderDeadPatientsTable)
 
 function renderPatientsTable() {
   fetch('/api/patient')
@@ -69,6 +69,108 @@ function renderPatientsTable() {
     })
 }
 
+function renderRecoveredPatientsTable() {
+  fetch('/api/patient')
+    .then((response) => response.json())
+    .then((patients) => {
+      const patientTableBody = document.querySelector('#patientsTable tbody')
+      patientTableBody.innerHTML = ''
+      let patientRow,
+        patientProfilePic,
+        patientFirstName,
+        patientLastName,
+        patientGender,
+        patientAge,
+        patientCondition,
+        profilePic
+      for (const patient of patients) {
+        if (patient.healthStatus !== 'recovered') {
+          continue
+        }
+        patientRow = document.createElement('tr')
+
+        patientProfilePic = document.createElement('td')
+        profilePic = document.createElement('img')
+        profilePic.setAttribute('src', patient.profilePhoto)
+        patientProfilePic.appendChild(profilePic)
+        patientRow.appendChild(patientProfilePic)
+
+        patientFirstName = document.createElement('td')
+        patientFirstName.innerHTML = patient.firstName
+        patientRow.appendChild(patientFirstName)
+
+        patientLastName = document.createElement('td')
+        patientLastName.innerHTML = patient.lastName
+        patientRow.appendChild(patientLastName)
+
+        patientGender = document.createElement('td')
+        patientGender.innerHTML = patient.gender
+        patientRow.appendChild(patientGender)
+
+        patientAge = document.createElement('td')
+        patientAge.innerHTML = patient.age
+        patientRow.appendChild(patientAge)
+
+        patientCondition = document.createElement('td')
+        patientCondition.innerHTML = patient.condition
+        patientRow.appendChild(patientCondition)
+
+        patientTableBody.appendChild(patientRow)
+      }
+    })
+}
+
+function renderDeadPatientsTable() {
+  fetch('/api/patient')
+    .then((response) => response.json())
+    .then((patients) => {
+      const patientTableBody = document.querySelector('#patientsTable tbody')
+      patientTableBody.innerHTML = ''
+      let patientRow,
+        patientProfilePic,
+        patientFirstName,
+        patientLastName,
+        patientGender,
+        patientAge,
+        patientCondition,
+        profilePic
+      for (const patient of patients) {
+        if (patient.healthStatus !== 'dead') {
+          continue
+        }
+        patientRow = document.createElement('tr')
+
+        patientProfilePic = document.createElement('td')
+        profilePic = document.createElement('img')
+        profilePic.setAttribute('src', patient.profilePhoto)
+        patientProfilePic.appendChild(profilePic)
+        patientRow.appendChild(patientProfilePic)
+
+        patientFirstName = document.createElement('td')
+        patientFirstName.innerHTML = patient.firstName
+        patientRow.appendChild(patientFirstName)
+
+        patientLastName = document.createElement('td')
+        patientLastName.innerHTML = patient.lastName
+        patientRow.appendChild(patientLastName)
+
+        patientGender = document.createElement('td')
+        patientGender.innerHTML = patient.gender
+        patientRow.appendChild(patientGender)
+
+        patientAge = document.createElement('td')
+        patientAge.innerHTML = patient.age
+        patientRow.appendChild(patientAge)
+
+        patientCondition = document.createElement('td')
+        patientCondition.innerHTML = patient.condition
+        patientRow.appendChild(patientCondition)
+
+        patientTableBody.appendChild(patientRow)
+      }
+    })
+}
+
 // A function for the 'Cure Patient' button that sets the patient's status from 'sick' to 'recovered' if the
 // operation is a success, but has a 1 in 10 chance of killing the patient.
 function dischargePatient(event) {
@@ -118,6 +220,36 @@ document.getElementById('admit').addEventListener('submit', function (event) {
   }).then((response) => {
     // console.log(response)
     renderPatientsTable()
+  })
+})
+
+// This script handles the submission of the Recovered Patient button (form)
+// The event triggers a post request to the /api/patient route to display
+// revovered patients.
+document
+  .getElementById('logRecovered')
+  .addEventListener('submit', function (event) {
+    event.preventDefault()
+    fetch('/api/patient', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }).then((response) => {
+      // console.log(response)
+      renderRecoveredPatientsTable()
+    })
+  })
+
+// This script handles the submission of the Dead Patient button (form)
+// The event triggers a post request to the /api/patient route to display
+// revovered patients.
+document.getElementById('logDead').addEventListener('submit', function (event) {
+  event.preventDefault()
+  fetch('/api/patient', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  }).then((response) => {
+    // console.log(response)
+    renderDeadPatientsTable()
   })
 })
 
