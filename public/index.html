@@ -17,9 +17,18 @@
             <!-- col 1 -->
             <div class="col-6 border">
                 <div>
-                    <button id="logSick" type="button" class="btn btn-primary" id="waiting">Waiting List</button>
-                    <button id="logRecovered" type="button" class="btn btn-success" id="healed">Healed</button>
-                    <button id="logDead" type="button" class="btn btn-dark" id="death">Death</button>
+                    <!-- A button that shows a log of all sick patients -->
+                    <button id="logSick" type="button" class="btn btn-primary">Waiting Room</button>
+                    <!-- A button that shows a log of recovered patients -->
+                    <button id="logRecovered" type="button" class="btn btn-success">Cured Patients</button>
+                    <!-- A button that shows a log of all dead patients -->
+                    <button id="logDead" type="button" class="btn btn-dark">Dead Patients</button>
+                    <!-- A button that makes a post request to /api/patient route whci generates a new patient and adds them to database -->
+                    <form id= "admit" action="/api/patient" method="post">
+                        <button name="admit" value="admit">Admit Patient</button>
+                    </form>
+                    <!-- A button that shows a log of all dead patients -->
+                    <button id="CleanRecords" type="button" class="btn btn-warning">Call the cleanup crew!</button>
                     <!-- Patients table -->
                     <table id="patientsTable">
                         <thead>
@@ -66,12 +75,9 @@
                     <button type="button" class="btn btn-info mx-5" id="operate">operate</button>
                 <br>
                 <br>
+                
                 <!-- Log surgery results ... -->
-                <textarea rows="6" cols="60" class="font-weight-light">
-Patient Nik has just been healed and discharged...
-Patient Ziyong has just died and discharged...
-Patient Gina has just been healed and discharged...            
-                </textarea>
+                <ul id="activityLog"></ul>
             </div>
 
         </div>
@@ -86,6 +92,6 @@ Patient Gina has just been healed and discharged...
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <script src="js/index.js"></script>
+    <script src="/js/index.js"></script>
   </body>
 </html>

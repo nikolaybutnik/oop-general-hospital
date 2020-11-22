@@ -175,9 +175,9 @@ function renderDeadPatientsTable() {
 // operation is a success, but has a 1 in 10 chance of killing the patient.
 function dischargePatient(event) {
   const liveOrDie = Math.floor(Math.random() * 10) + 1
-  console.log(liveOrDie)
+  // console.log(liveOrDie)
   // If the random number is 1, the patient dies.
-  if (liveOrDie === 1) {
+  if (liveOrDie <= 5) {
     const patientId = event.target.getAttribute('data-patientid')
     fetch('/api/patient/' + patientId, {
       body: JSON.stringify({ healthStatus: 'dead' }),
@@ -188,8 +188,9 @@ function dischargePatient(event) {
       method: 'PUT',
     })
       .then((response) => response.json())
-      .then((patient) => {
+      .then((response) => {
         renderPatientsTable()
+        treatmentResults(event, liveOrDie)
       })
   } else {
     // If the random number is other than 1, the patient recovers.
@@ -203,10 +204,29 @@ function dischargePatient(event) {
       method: 'PUT',
     })
       .then((response) => response.json())
-      .then((patient) => {
+      .then((response) => {
         renderPatientsTable()
+        treatmentResults(event, liveOrDie)
       })
   }
+}
+
+// Function which shows the result of patient treatment in the activity log
+function treatmentResults(event, liveOrDie) {
+  const patientId = event.target.getAttribute('data-patientid')
+  fetch('/api/patient/' + patientId)
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data)
+      const activityLog = document.getElementById('activityLog')
+      const listElement = document.createElement('li')
+      if (liveOrDie <= 5) {
+        listElement.innerHTML = `Procedure to cure ${data.data.condition} failed! ${data.data.firstName} ${data.data.lastName} didn't make it...`
+      } else {
+        listElement.innerHTML = `Procedure to cure ${data.data.condition} succeeded! ${data.data.firstName} ${data.data.lastName} made a full recovery and was discharged!`
+      }
+      activityLog.appendChild(listElement)
+    })
 }
 
 // This script handles the submission of the Admit Patient button (form)

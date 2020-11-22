@@ -56,5 +56,19 @@ router.put('/api/patient/:id', (req, res) => {
   }
 })
 
+// Define a route that returns that sends a patient object clicked with Cure Patient button.
+router.get('/api/patient/:id', async (req, res) => {
+  try {
+    const patientId = await req.params.id
+    const targetPatient = await db.Patient.findOne({ where: { id: patientId } })
+    console.log(targetPatient.dataValues)
+    res.json({ data: targetPatient.dataValues })
+  } catch (err) {
+    if (err) {
+      res.status(500).json(err)
+    }
+  }
+})
+
 // Export the router.
 module.exports = router
