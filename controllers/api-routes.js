@@ -6,6 +6,11 @@ const express = require('express')
 // const Patient = require('../models/new_patient')
 const router = express.Router()
 
+// Default route that renders the screen.
+router.get('/', function (req, res) {
+  res.render('index')
+})
+
 // Define an api route to generate new patient.
 router.post('/api/patient', async (req, res) => {
   try {
@@ -38,21 +43,64 @@ router.put('/api/patient/:id', (req, res) => {
   const patientId = req.params.id
   // console.log(req.body.healthStatus)
   // If {healthStatus: recovered}, update the patient in the database with a recovered status.
-  if (req.body.healthStatus === 'recovered') {
+  try {
+    if (req.body.healthStatus === 'recovered') {
+      db.Patient.update(
+        { healthStatus: 'recovered' },
+        { where: { id: patientId } }
+      ).then((patient) => {
+        res.json(patient)
+      })
+      // If {healthStatus: dead}, update the patient in the database with a dead status.
+    } else if (req.body.healthStatus === 'dead') {
+      db.Patient.update(
+        { healthStatus: 'dead' },
+        { where: { id: patientId } }
+      ).then((patient) => {
+        res.json(patient)
+      })
+    }
+  } catch (err) {
+    if (err) {
+      res.status(500).json(err)
+    }
+  }
+})
+
+// Define a route that will update a patient's health status to 'operating'
+router.patch('/api/patient/:id', async (req, res) => {
+  const patientId = await req.params.id
+  const targetPatient = await db.Patient.findOne({ where: { id: patientId } })
+  // console.log(targetPatient.dataValues)
+  try {
     db.Patient.update(
-      { healthStatus: 'recovered' },
+      { healthStatus: 'operating' },
       { where: { id: patientId } }
     ).then((patient) => {
-      res.json(patient)
+      res.json({ data: targetPatient.dataValues })
+      // console.log(targetPatient.dataValues)
     })
-    // If {healthStatus: dead}, update the patient in the database with a dead status.
-  } else if (req.body.healthStatus === 'dead') {
-    db.Patient.update(
-      { healthStatus: 'dead' },
-      { where: { id: patientId } }
-    ).then((patient) => {
-      res.json(patient)
-    })
+    // .then(async (patient) => {
+    //   const operatingPatients = await db.Patient.findAll({
+    //     where: {
+    //       healthStatus: 'operating',
+    //     },
+    //   })
+    //   const operatingPatientsObj = []
+    //   operatingPatients.forEach((element) => {
+    //     operatingPatientsObj.push(element.dataValues)
+    //   })
+    //   console.log(operatingPatientsObj)
+    //   res.render('index', {
+    //     layout: false,
+    //     operating: operatingPatients,
+    //   })
+    //   res.json({ data: operatingPatientsObj })
+    // })
+  } catch (err) {
+    if (err) {
+      res.status(500).json(err)
+    }
   }
 })
 

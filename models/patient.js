@@ -127,7 +127,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // There will be 3 statuses: sick, recovered, dead
+      // There will be 4 statuses: sick, recovered, dead, operating
       healthStatus: {
         type: DataTypes.STRING,
         allowNull: false,

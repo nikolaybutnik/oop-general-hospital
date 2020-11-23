@@ -7,6 +7,12 @@ logRecoveredButton.addEventListener('click', renderRecoveredPatientsTable)
 // Reference the Log - Sick button and assign a click event.
 const logDeadButton = document.getElementById('logDead')
 logDeadButton.addEventListener('click', renderDeadPatientsTable)
+// Reference the Operate button and assign a click event.
+const operateButton = document.getElementById('operate')
+operateButton.addEventListener('click', beginOperation)
+
+// Render the sick patients table on page load
+renderPatientsTable()
 
 function renderPatientsTable() {
   fetch('/api/patient')
@@ -21,8 +27,10 @@ function renderPatientsTable() {
         patientGender,
         patientAge,
         patientCondition,
-        patientDischargeButton,
-        dischargeButton,
+        sendToOperate,
+        sendToOperateButton,
+        // patientDischargeButton,
+        // dischargeButton,
         profilePic
       for (const patient of patients) {
         if (patient.healthStatus !== 'sick') {
@@ -56,13 +64,22 @@ function renderPatientsTable() {
         patientCondition.innerHTML = patient.condition
         patientRow.appendChild(patientCondition)
 
-        patientDischargeButton = document.createElement('td')
-        dischargeButton = document.createElement('button')
-        dischargeButton.innerHTML = 'Cure Patient'
-        dischargeButton.setAttribute('data-patientId', patient.id)
-        dischargeButton.addEventListener('click', dischargePatient)
-        patientDischargeButton.appendChild(dischargeButton)
-        patientRow.appendChild(patientDischargeButton)
+        // A button that sends a patient in the waiting list to the operating room.
+        sendToOperate = document.createElement('td')
+        sendToOperateButton = document.createElement('button')
+        sendToOperateButton.innerHTML = 'Send to surgery'
+        sendToOperateButton.setAttribute('data-patientId', patient.id)
+        sendToOperateButton.addEventListener('click', sendToOperatingRoom)
+        sendToOperate.appendChild(sendToOperateButton)
+        patientRow.appendChild(sendToOperateButton)
+
+        // patientDischargeButton = document.createElement('td')
+        // dischargeButton = document.createElement('button')
+        // dischargeButton.innerHTML = 'Cure Patient'
+        // dischargeButton.setAttribute('data-patientId', patient.id)
+        // dischargeButton.addEventListener('click', dischargePatient)
+        // patientDischargeButton.appendChild(dischargeButton)
+        // patientRow.appendChild(patientDischargeButton)
 
         patientTableBody.appendChild(patientRow)
       }
@@ -173,12 +190,14 @@ function renderDeadPatientsTable() {
 
 // A function for the 'Cure Patient' button that sets the patient's status from 'sick' to 'recovered' if the
 // operation is a success, but has a 1 in 10 chance of killing the patient.
-function dischargePatient(event) {
+function beginOperation() {
   const liveOrDie = Math.floor(Math.random() * 10) + 1
   // console.log(liveOrDie)
   // If the random number is 1, the patient dies.
   if (liveOrDie <= 5) {
-    const patientId = event.target.getAttribute('data-patientid')
+    const patientId = document.getElementById('operatingTable').childNodes[1]
+      .textContent
+    console.log(patientId)
     fetch('/api/patient/' + patientId, {
       body: JSON.stringify({ healthStatus: 'dead' }),
       headers: {
@@ -190,11 +209,14 @@ function dischargePatient(event) {
       .then((response) => response.json())
       .then((response) => {
         renderPatientsTable()
-        treatmentResults(event, liveOrDie)
+        treatmentResults(liveOrDie)
+        document.getElementById('operatingTable').innerHTML = ''
       })
   } else {
     // If the random number is other than 1, the patient recovers.
-    const patientId = event.target.getAttribute('data-patientid')
+    const patientId = document.getElementById('operatingTable').childNodes[1]
+      .textContent
+    console.log(patientId)
     fetch('/api/patient/' + patientId, {
       body: JSON.stringify({ healthStatus: 'recovered' }),
       headers: {
@@ -206,14 +228,16 @@ function dischargePatient(event) {
       .then((response) => response.json())
       .then((response) => {
         renderPatientsTable()
-        treatmentResults(event, liveOrDie)
+        treatmentResults(liveOrDie)
+        document.getElementById('operatingTable').innerHTML = ''
       })
   }
 }
 
 // Function which shows the result of patient treatment in the activity log
-function treatmentResults(event, liveOrDie) {
-  const patientId = event.target.getAttribute('data-patientid')
+function treatmentResults(liveOrDie) {
+  const patientId = document.getElementById('operatingTable').childNodes[1]
+    .textContent
   fetch('/api/patient/' + patientId)
     .then((response) => response.json())
     .then((data) => {
@@ -226,6 +250,29 @@ function treatmentResults(event, liveOrDie) {
         listElement.innerHTML = `Procedure to cure ${data.data.condition} succeeded! ${data.data.firstName} ${data.data.lastName} made a full recovery and was discharged!`
       }
       activityLog.appendChild(listElement)
+    })
+}
+
+// Function that takes a patient from the waiting area and sends them to the operating room.
+function sendToOperatingRoom(event) {
+  const patientId = event.target.getAttribute('data-patientid')
+  fetch('/api/patient/' + patientId, {
+    method: 'PATCH',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      renderPatientsTable()
+      document.getElementById('activityLog').innerHTML = ''
+      document.getElementById('operatingTable').innerHTML = `
+      <div style='display: none;'>${data.data.id}</div>
+      <img src=${data.data.profilePhoto} alt="" width="100">
+      <p>First name: ${data.data.firstName}</p>
+      <p>Last name: ${data.data.lastName}</p>
+      <p>Gender: ${data.data.gender}</p>
+      <p>Age: ${data.data.age}</p>
+      <p>Condition: ${data.data.condition}</p>
+      <p>This may sting a little...</p>`
+      console.log(data)
     })
 }
 

@@ -1,9 +1,74 @@
-<h1>New Patient</h1>
+<div class="container border">
+    <!-- row 1 -->
+    <div class="row width=100% border">
+        <!-- col 1 -->
+        <div class="col-6 border">
+            <div>
+                <!-- A button that shows a log of all sick patients -->
+                <button id="logSick" type="button" class="btn btn-primary">Waiting Room</button>
+                <!-- A button that shows a log of recovered patients -->
+                <button id="logRecovered" type="button" class="btn btn-success">Cured Patients</button>
+                <!-- A button that shows a log of all dead patients -->
+                <button id="logDead" type="button" class="btn btn-dark">Dead Patients</button>
+                <!-- A button that makes a post request to /api/patient route whci generates a new patient and adds them to database -->
+                <form id="admit" action="/api/patient" method="post">
+                    <button name="admit" value="admit">Admit Patient</button>
+                </form>
+                <!-- A button that shows a log of all dead patients -->
+                <button id="CleanRecords" type="button" class="btn btn-warning">Call the cleanup crew!</button>
+                <!-- Patients table -->
+                <table id="patientsTable">
+                    <thead>
+                        <tr>
+                            <th class="font-weight-light">Image</th>
+                            <th class="font-weight-light">First Name</th>
+                            <th class="font-weight-light">Last Name</th>
+                            <th class="font-weight-light">Gender</th>
+                            <th class="font-weight-light">Age</th>
+                            <th class="font-weight-light">Condition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-<img src="{{data.profilePhoto}}" alt="patient photo" width="150">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- col 2 -->
+        <div class="col-6 border">
+            <!-- col 2 sub row -->
+            <div class="row border">
+                <!-- col 2 sub row col 1 -->
+                <div class="col-6 border">
+                    Trust me, I'm a doctor
+                    <img src="surgicalAvator.png" alt="" width="300" height="300">
+                </div>
+                <!-- col 2 sub row col 2 -->
+                {{!-- This empty div will display the patient on the operating table. --}}
+                <div class="col-6 border">
+                    <div id="operatingTable">
+                        {{!-- {{operatingpatient}} --}}
+                        {{!-- {{#each operating}}
+                        <li>Hello</li>
+                        {{/each}} --}}
+                    </div>
+                </div>
+            </div>
+            <!-- end of sub row -->
 
-<p>First name: {{data.firstName}}</p>
-<p>Last name: {{data.lastName}}</p>
-<p>Gender: {{data.gender}}</p>
-<p>Age: {{data.age}}</p>
-<p>Condition: {{data.condition}}</p>
+            <!-- within col 2 -->
+            <!-- button to be centered -->
+            <button id="operate" type="button" class="btn btn-info mx-5">operate</button>
+            <br>
+            <br>
+
+            <!-- Log surgery results ... -->
+            <ul id="activityLog"></ul>
+        </div>
+
+    </div>
+
+    <div class="row width=100% border">
+        <!-- capacity bar -->
+    </div>
+</div>
