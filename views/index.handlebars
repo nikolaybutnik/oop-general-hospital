@@ -49,8 +49,10 @@
             <div class="row">
                 <!-- col 2 sub row col 1 -->
                 <div class="col-6">
-                    Trust me, I'm a doctor
-                    <img src="surgicalAvator.png" alt="" class="responsive" width="300" height="300">
+
+                <div id="trustme"> Trust me, I'm a doctor</div>
+                <img src="surgicalAvator.png" id="doctor" class="responsive" alt="" width="300" height="300">
+
                 </div>
                 <!-- col 2 sub row col 2 -->
                 {{!-- This empty div will display the patient on the operating table. --}}
@@ -62,7 +64,15 @@
 
             <!-- within col 2 -->
             <!-- button to be centered -->
-            <button id="operate" class="btn btn-info mx-5">operate</button>
+            <main>
+                <div class="button">
+                    <div id="operate">operate</div>
+                </div>
+                <div class="progress-bar"></div>
+                <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
+                    <path class="check" class="st0" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2" />
+                </svg>
+            </main>
             <br>
             <br>
 
