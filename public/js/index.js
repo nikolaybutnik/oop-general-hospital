@@ -315,16 +315,26 @@ function beginCleanup() {
   renderPatientsTable()
 }
 
-// This script handles the submission of the Admit Patient button (form)
+// This script handles the submission of the Admit Patient button
 // The event triggers a post request to the /api/patient route to generate
 // a new patient and add them to the database.
 document.getElementById('admit').addEventListener('click', function (event) {
-  event.preventDefault()
-  fetch('/api/patient', {
-    method: 'POST',
-  }).then(() => {
-    renderPatientsTable()
-  })
+  if (
+    document.getElementById('myBar').textContent === '100% Capacity reached'
+  ) {
+    const activityLog = document.getElementById('activityLog')
+    const listElement = document.createElement('li')
+    activityLog.innerHTML = ''
+    listElement.innerHTML = 'Maximum waiting room capacity has been reached!'
+    activityLog.appendChild(listElement)
+  } else {
+    event.preventDefault()
+    fetch('/api/patient', {
+      method: 'POST',
+    }).then(() => {
+      renderPatientsTable()
+    })
+  }
 })
 
 // This script handles the submission of the Recovered Patient button (form)
@@ -372,13 +382,20 @@ async function updateCapacityBar() {
   // console.log(allpatients)
   // console.log(sickpatients)
   // Set the maximum capacity of the hospital.
-  const maxCapacity = 20
+  const maxCapacity = 10
   // caclulate the percentage of currently sick patients that occupy the hospital.
   const percentage = Math.ceil((sickpatients.length / maxCapacity) * 100)
 
   const elem = document.getElementById('myBar')
   const width = percentage
 
-  elem.style.width = width + '%'
-  elem.innerHTML = width + '%  Capacity'
+  if (percentage < 100) {
+    elem.style.width = width + '%'
+    elem.style.backgroundColor = '#4caf50'
+    elem.innerHTML = width + '% Capacity'
+  } else if (percentage === 100) {
+    elem.style.width = width + '%'
+    elem.style.backgroundColor = 'red'
+    elem.innerHTML = '100% Capacity reached'
+  }
 }
