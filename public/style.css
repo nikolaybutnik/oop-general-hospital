@@ -11,20 +11,46 @@ button.btn {
   margin-bottom: 10px;
 }
 
-/*
-  These rules take effect when the browser's width
-  is either 768px or less.
-*/
-@media screen and (max-width: 768px) {
-  /* The body's bg color will be #333 */
-  body {
-    background-color: #333;
-  }
+#patientsTable {
+  border: solid 1px #ddeeee;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+#patientsTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-  /* The wrapper's width will be 600px */
-  .wrapper {
-    width: 600px;
-  }
+#patientsTable tr:hover {
+  background-color: #ddd;
+}
+#patientsTable thead th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #23adad;
+  color: white;
+  text-shadow: 1px 1px 1px #fff;
+  /* background-color: #ddefef;
+  border: solid 1px #ddeeee;
+  color: #336b6b;
+  padding: 10px;
+  text-align: left;
+  text-shadow: 1px 1px 1px #fff; */
+}
+#patientsTable tbody td {
+  border: solid 1px #ddeeee;
+  color: #333;
+  padding: 10px;
+  text-shadow: 1px 1px 1px #fff;
+}
+
+#operatingTable {
+  background-color: rgb(85, 94, 89);
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
 }
 
 #myProgress {
@@ -40,6 +66,60 @@ button.btn {
   line-height: 30px; /* To center it vertically */
   color: white;
 }
+
+/*
+  These rules take effect when the browser's width
+  is either 1200px or less.
+*/
+/* Width at 1200px and below */
+@media screen and (max-width: 1200px) {
+  body {
+    background-color: rgb(226, 223, 223);
+  }
+
+  /* The wrapper's width will be 600px */
+  .wrapper {
+    width: 600px;
+  }
+}
+/*
+  These rules take effect when the browser's width
+  is either 768px or less.
+*/
+@media screen and (max-width: 768px) {
+  /* The body's bg color will be #333 */
+  body {
+    background-color: rgb(226, 223, 223);
+  }
+
+  /* The wrapper's width will be 600px */
+  .wrapper {
+    width: 200px;
+  }
+}
+
+/* Additional Screen Sizes */
+
+/*
+  These rules take effect when the browser's width
+  is either 320px or less.
+*/
+
+/* Width at 320px and below */
+@media screen and (max-width: 320px) {
+  /* The body's bg color will be #333 */
+  body {
+    background-color: darkblue;
+    /* background-color: rgb(226, 223, 223); */
+  }
+
+  /* The wrapper's width will be 600px */
+  .wrapper {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  
 body {
   background: white;
 }
