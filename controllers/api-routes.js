@@ -49,7 +49,7 @@ router.put('/api/patient/:id', (req, res) => {
         { healthStatus: 'recovered' },
         { where: { id: patientId } }
       ).then((patient) => {
-        res.json(patient)
+        res.status(200).json(patient)
       })
       // If {healthStatus: dead}, update the patient in the database with a dead status.
     } else if (req.body.healthStatus === 'dead') {
@@ -57,7 +57,7 @@ router.put('/api/patient/:id', (req, res) => {
         { healthStatus: 'dead' },
         { where: { id: patientId } }
       ).then((patient) => {
-        res.json(patient)
+        res.status(200).json(patient)
       })
     }
   } catch (err) {
@@ -77,26 +77,9 @@ router.patch('/api/patient/:id', async (req, res) => {
       { healthStatus: 'operating' },
       { where: { id: patientId } }
     ).then((patient) => {
-      res.json({ data: targetPatient.dataValues })
+      res.status(200).json({ data: targetPatient.dataValues })
       // console.log(targetPatient.dataValues)
     })
-    // .then(async (patient) => {
-    //   const operatingPatients = await db.Patient.findAll({
-    //     where: {
-    //       healthStatus: 'operating',
-    //     },
-    //   })
-    //   const operatingPatientsObj = []
-    //   operatingPatients.forEach((element) => {
-    //     operatingPatientsObj.push(element.dataValues)
-    //   })
-    //   console.log(operatingPatientsObj)
-    //   res.render('index', {
-    //     layout: false,
-    //     operating: operatingPatients,
-    //   })
-    //   res.json({ data: operatingPatientsObj })
-    // })
   } catch (err) {
     if (err) {
       res.status(500).json(err)
@@ -110,7 +93,33 @@ router.get('/api/patient/:id', async (req, res) => {
     const patientId = await req.params.id
     const targetPatient = await db.Patient.findOne({ where: { id: patientId } })
     console.log(targetPatient.dataValues)
-    res.json({ data: targetPatient.dataValues })
+    res.status(200).json({ data: targetPatient.dataValues })
+  } catch (err) {
+    if (err) {
+      res.status(500).json(err)
+    }
+  }
+})
+
+// Define a route that will delete all patients with healthStatus of 'dead'.
+router.delete('/api/patient', async (req, res) => {
+  try {
+    const rip = await db.Patient.findAll({
+      where: {
+        healthStatus: 'dead',
+      },
+    })
+    const ripArray = []
+    rip.forEach((element) => {
+      ripArray.push(element.dataValues)
+    })
+    // console.log(ripArray)
+    db.Patient.destroy({
+      where: {
+        healthStatus: 'dead',
+      },
+    })
+    res.status(200).json(ripArray)
   } catch (err) {
     if (err) {
       res.status(500).json(err)
