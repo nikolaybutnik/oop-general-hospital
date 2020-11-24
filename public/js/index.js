@@ -67,6 +67,7 @@ function renderPatientsTable() {
         // A button that sends a patient in the waiting list to the operating room.
         sendToOperate = document.createElement('td')
         sendToOperateButton = document.createElement('button')
+        sendToOperateButton.setAttribute('class', 'btn btn-outline-primary')
         sendToOperateButton.innerHTML = 'Send to surgery'
         sendToOperateButton.setAttribute('data-patientId', patient.id)
         sendToOperateButton.addEventListener('click', sendToOperatingRoom)
@@ -316,13 +317,11 @@ function beginCleanup() {
 // This script handles the submission of the Admit Patient button (form)
 // The event triggers a post request to the /api/patient route to generate
 // a new patient and add them to the database.
-document.getElementById('admit').addEventListener('submit', function (event) {
+document.getElementById('admit').addEventListener('click', function (event) {
   event.preventDefault()
   fetch('/api/patient', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  }).then((response) => {
-    // console.log(response)
+  }).then(() => {
     renderPatientsTable()
   })
 })
@@ -358,28 +357,26 @@ document.getElementById('logDead').addEventListener('submit', function (event) {
 })
 
 // Progress bar
-async function capacityBar() {
-  // Get an array of all currently sick patients.
-  const response = await fetch('/api/patient', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  })
-  const allpatients = await response.json()
-  const sickpatients = await allpatients.filter(
-    (patient) => patient.healthStatus === 'sick'
-  )
-  // console.log(allpatients)
-  // console.log(sickpatients)
-  // Set the maximum capacity of the hospital.
-  const maxCapacity = 200
-  // caclulate the percentage of currently sick patients that occupy the hospital.
-  const percentage = Math.ceil((sickpatients.length / maxCapacity) * 100)
+// async function capacityBar() {
+//   // Get an array of all currently sick patients.
+//   const response = await fetch('/api/patient', {
+//     method: 'GET',
+//     headers: { 'Content-Type': 'application/json' },
+//   })
+//   const allpatients = await response.json()
+//   const sickpatients = await allpatients.filter(
+//     (patient) => patient.healthStatus === 'sick'
+//   )
+//   // console.log(allpatients)
+//   // console.log(sickpatients)
+//   // Set the maximum capacity of the hospital.
+//   const maxCapacity = 200
+//   // caclulate the percentage of currently sick patients that occupy the hospital.
+//   const percentage = Math.ceil((sickpatients.length / maxCapacity) * 100)
 
-  const elem = document.getElementById('myBar')
-  const width = percentage
+//   const elem = document.getElementById('myBar')
+//   const width = percentage
 
-  elem.style.width = width + '%'
-  elem.innerHTML = width + '%'
-}
-
-capacityBar()
+//   elem.style.width = width + '%'
+//   elem.innerHTML = width + '%'
+// }
