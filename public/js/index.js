@@ -76,6 +76,7 @@ function renderPatientsTable() {
 
         patientTableBody.appendChild(patientRow)
       }
+      updateCapacityBar()
     })
 }
 
@@ -357,7 +358,8 @@ document.getElementById('logDead').addEventListener('submit', function (event) {
 })
 
 // Progress bar
-async function capacityBar() {
+// Update capacity bar when renderpatienttatble is called
+async function updateCapacityBar() {
   // Get an array of all currently sick patients.
   const response = await fetch('/api/patient', {
     method: 'GET',
@@ -370,7 +372,7 @@ async function capacityBar() {
   // console.log(allpatients)
   // console.log(sickpatients)
   // Set the maximum capacity of the hospital.
-  const maxCapacity = 200
+  const maxCapacity = 20
   // caclulate the percentage of currently sick patients that occupy the hospital.
   const percentage = Math.ceil((sickpatients.length / maxCapacity) * 100)
 
@@ -378,7 +380,5 @@ async function capacityBar() {
   const width = percentage
 
   elem.style.width = width + '%'
-  elem.innerHTML = width + '%'
+  elem.innerHTML = width + '%  Capacity'
 }
-
-capacityBar()
