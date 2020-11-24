@@ -67,6 +67,7 @@ function renderPatientsTable() {
         // A button that sends a patient in the waiting list to the operating room.
         sendToOperate = document.createElement('td')
         sendToOperateButton = document.createElement('button')
+        sendToOperateButton.setAttribute('class', 'btn btn-outline-primary')
         sendToOperateButton.innerHTML = 'Send to surgery'
         sendToOperateButton.setAttribute('data-patientId', patient.id)
         sendToOperateButton.addEventListener('click', sendToOperatingRoom)
@@ -316,13 +317,11 @@ function beginCleanup() {
 // This script handles the submission of the Admit Patient button (form)
 // The event triggers a post request to the /api/patient route to generate
 // a new patient and add them to the database.
-document.getElementById('admit').addEventListener('submit', function (event) {
+document.getElementById('admit').addEventListener('click', function (event) {
   event.preventDefault()
   fetch('/api/patient', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  }).then((response) => {
-    // console.log(response)
+  }).then(() => {
     renderPatientsTable()
   })
 })
