@@ -7,6 +7,16 @@ html {
   box-sizing: inherit;
 }
 
+.navbar a:hover {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  background-color: #000;
+}
+
 button.btn {
   margin-bottom: 10px;
 }
