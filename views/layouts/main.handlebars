@@ -35,19 +35,23 @@
     <script src="https://kit.fontawesome.com/207a780f1d.js" crossorigin="anonymous"></script>
     <script src="/js/index.js"></script>
     <script>
-        // Button Hover Effect using Animejs
+        // Header button Hover Effect using Animejs
         const btns = document.querySelectorAll('.btn')
         btns.forEach(element => element.addEventListener('mouseover', (event) => {
+            element.style.border = 'none'
+            element.style.color = '#4fcafa'
             anime({
-                targets: event.target,
-                scale: 1.15,
+                targets: event.currentTarget,
+                scale: 1.25,
                 duration: 500
             })
         }))
 
         btns.forEach(element => element.addEventListener('mouseleave', (event) => {
+            element.style.border = 'solid'
+            element.style.color = '#23adad'
             anime({
-                targets: event.target,
+                targets: event.currentTarget,
                 scale: 1,
                 duration: 500
             })
