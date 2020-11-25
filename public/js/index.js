@@ -10,8 +10,8 @@ logDeadButton.addEventListener('click', renderDeadPatientsTable)
 // Reference the Operate button and assign a click event.
 const operateButton = document.getElementById('operate')
 operateButton.addEventListener('click', beginOperation)
-const cleanupButton = document.getElementById('CleanRecords')
-cleanupButton.addEventListener('click', beginCleanup)
+const wipeRecordsButton = document.getElementById('CleanRecords')
+wipeRecordsButton.addEventListener('click', cookTheBooks)
 
 // Render the sick patients table on page load
 renderPatientsTable()
@@ -290,7 +290,7 @@ function sendToOperatingRoom(event) {
   }
 }
 
-function beginCleanup() {
+function cookTheBooks() {
   const activityLog = document.getElementById('activityLog')
   fetch('/api/patient/', {
     method: 'DELETE',
@@ -301,14 +301,13 @@ function beginCleanup() {
       if (data.length === 0) {
         const listElement = document.createElement('li')
         activityLog.innerHTML = ''
-        listElement.innerHTML =
-          'The place is sparkling clean, no cleanup needed!'
+        listElement.innerHTML = 'The hospital is doing great, keep it up!'
         activityLog.appendChild(listElement)
       } else {
         const listElement = document.createElement('li')
         activityLog.innerHTML = ''
         listElement.innerHTML =
-          "The cleanup crew has taken out the garbage! Please don't litter!"
+          'The bookkeeper worked their magic, records have been wiped clean!'
         activityLog.appendChild(listElement)
       }
     })
@@ -391,7 +390,7 @@ async function updateCapacityBar() {
 
   if (percentage < 100) {
     elem.style.width = width + '%'
-    elem.style.backgroundColor = '#4caf50'
+    elem.style.backgroundColor = '#23adad'
     elem.innerHTML = width + '% Capacity'
   } else if (percentage === 100) {
     elem.style.width = width + '%'

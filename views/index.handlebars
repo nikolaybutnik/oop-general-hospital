@@ -1,32 +1,38 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-
             <div class="row">
-
-                <!-- Patients table -->
-                <div class="col-md-3">
+                <div class="btn-group">
                     <!-- A button that shows a log of all sick patients -->
-                    <button id="logSick" class="btn btn-primary">Waiting Room</button>
-                </div>
-                <div class="col-md-3">
+                    <button id="logSick" class="btn btn-header"><i class="fas fa-clinic-medical fa-3x"></i>
+                        <p>Waiting Room</p>
+                    </button>
                     <!-- A button that shows a log of recovered patients -->
-                    <button id="logRecovered" class="btn btn-success">Cured Patients</button>
-                </div>
-                <div class="col-md-3">
+                    <button id="logRecovered" class="btn btn-header"><i class="fas fa-notes-medical fa-3x"></i>
+                        <p>Cured Patients</p>
+                    </button>
                     <!-- A button that shows a log of all dead patients -->
-                    <button id="logDead" class="btn btn-dark">Dead Patients</button></div>
-                <div class="col-md-3">
+                    <button id="logDead" class="btn btn-header"><i class="fas fa-book-dead fa-3x"></i>
+                        <p>Unfortunate Accidents</p>
+                    </button>
                     <!-- A button that makes a post request to /api/patient route whci generates a new patient and adds them to database -->
-                    <button class="btn btn-secondary" id="admit">Admit Patient</button>
-                </div>
-                <div class="col-md-12">
+                    <button class="btn btn-header" id="admit"><i class="fas fa-address-card fa-3x"></i>
+                        <p>Admit Patient</p>
+                    </button>
                     <!-- A button that shows a log of all dead patients -->
-                    <button id="CleanRecords" class="btn btn-warning">Call the cleanup crew!</button>
+                    <button id="CleanRecords" class="btn btn-header"><i class="fas fa-phone-alt fa-3x"></i>
+                        <p>Bookkeeper</p>
+                    </button>
                 </div>
             </div>
 
-
+            <!-- Patients table -->
+            <div class="row border">
+                <div id="myBar">
+                    <div id="myProgress"> </div>
+                </div>
+            </div>
+            <br>
             <table id="patientsTable">
                 <thead>
                     <tr>
@@ -43,15 +49,16 @@
                 </tbody>
             </table>
         </div>
+
         <!-- col 2 -->
         <div class="col-md-6">
             <!-- col 2 sub row -->
             <div class="row">
                 <!-- col 2 sub row col 1 -->
-                <div class="col-6">
-
+                <div class="col-6 d-flex justify-content-center">
                     <div id="trustme"> Trust me, I'm a doctor</div>
-                    <img src="surgicalAvator.png" id="doctor" class="responsive" alt="" width="300" height="300">
+                    <img src="surgicalAvator.png" id="doctor" class="img-fluid max-width: 100%; height: auto; "
+                        alt="surgeon" width="300" height="300">
 
                 </div>
                 <!-- col 2 sub row col 2 -->
@@ -80,10 +87,5 @@
             <ul id="activityLog"></ul>
         </div>
 
-    </div>
-    <div class="row border">
-        <div id="myBar">
-            <div id="myProgress"> </div>
-        </div>
     </div>
 </div>
