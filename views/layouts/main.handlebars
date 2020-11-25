@@ -100,11 +100,17 @@
             })
 
         $('.button').click(function () {
-            operateButtonAnime.play()
+            console.log(document.getElementById('operatingTable').hasChildNodes())
+            if (document.getElementById('operatingTable').hasChildNodes()) {
+                operateButtonAnime.play()
+            }
         })
 
         $('#operate').click(function () {
-            operateButtonAnime.play()
+            console.log(document.getElementById('operatingTable').hasChildNodes())
+            if (document.getElementById('operatingTable').hasChildNodes()) {
+                operateButtonAnime.play()
+            }
         })
 
     </script>

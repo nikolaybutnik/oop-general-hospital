@@ -142,6 +142,9 @@ main {
   right: 0;
   cursor: pointer;
   z-index: 1;
+  height: 100%;
+  text-align: center;
+  line-height: 80px;
 }
 
 .progress-bar {
@@ -176,56 +179,12 @@ svg {
   stroke-linejoin: round;
 }
 
-/*
-  These rules take effect when the browser's width
-  is either 1200px or less.
-*/
-/* Width at 1200px and below */
-@media screen and (max-width: 1200px) {
-  body {
-    background-color: rgb(226, 223, 223);
-  }
-
-  /* The wrapper's width will be 600px */
-  .wrapper {
-    width: 600px;
-  }
-}
-/*
-  These rules take effect when the browser's width
-  is either 768px or less.
-*/
-@media screen and (max-width: 768px) {
-  /* The body's bg color will be #333 */
-  body {
-    background-color: rgb(226, 223, 223);
-  }
-
-  /* The wrapper's width will be 600px */
-  .wrapper {
-    width: 200px;
-  }
-}
-
-/* Additional Screen Sizes */
-
-/*
-  These rules take effect when the browser's width
-  is either 320px or less.
-*/
-
-/* Width at 320px and below */
-@media screen and (max-width: 320px) {
-  /* The body's bg color will be #333 */
-  body {
-    background-color: darkblue;
-    /* background-color: rgb(226, 223, 223); */
-  }
-
-  /* The wrapper's width will be 600px */
-  .wrapper {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-  }
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
