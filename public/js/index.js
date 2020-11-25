@@ -67,12 +67,13 @@ function renderPatientsTable() {
         // A button that sends a patient in the waiting list to the operating room.
         sendToOperate = document.createElement('td')
         sendToOperateButton = document.createElement('button')
-        sendToOperateButton.setAttribute('class', 'btn btn-outline-primary')
-        sendToOperateButton.innerHTML = 'Send to surgery'
+        sendToOperateButton.setAttribute('class', 'surgerybtn')
+        sendToOperateButton.innerHTML =
+          '<i class="fas fa-syringe fa-lg"></i>Cure'
         sendToOperateButton.setAttribute('data-patientId', patient.id)
         sendToOperateButton.addEventListener('click', sendToOperatingRoom)
         sendToOperate.appendChild(sendToOperateButton)
-        patientRow.appendChild(sendToOperateButton)
+        patientRow.appendChild(sendToOperate)
 
         patientTableBody.appendChild(patientRow)
       }
@@ -193,7 +194,7 @@ function beginOperation() {
     // If the random number is 1, the patient dies.
     if (liveOrDie <= 5) {
       const patientId = document.getElementById('operatingTable').childNodes[1]
-        .textContent
+        .childNodes[3].childNodes[3].textContent
       console.log(patientId)
       fetch('/api/patient/' + patientId, {
         body: JSON.stringify({ healthStatus: 'dead' }),
@@ -212,7 +213,7 @@ function beginOperation() {
     } else {
       // If the random number is other than 1, the patient recovers.
       const patientId = document.getElementById('operatingTable').childNodes[1]
-        .textContent
+        .childNodes[3].childNodes[3].textContent
       console.log(patientId)
       fetch('/api/patient/' + patientId, {
         body: JSON.stringify({ healthStatus: 'recovered' }),
@@ -232,7 +233,7 @@ function beginOperation() {
   } else {
     const listElement = document.createElement('li')
     activityLog.innerHTML = ''
-    listElement.innerHTML = 'Bring in the next one!'
+    listElement.innerHTML = 'Bring in the next patient!'
     activityLog.appendChild(listElement)
   }
 }
@@ -240,7 +241,7 @@ function beginOperation() {
 // Function which shows the result of patient treatment in the activity log
 function treatmentResults(liveOrDie) {
   const patientId = document.getElementById('operatingTable').childNodes[1]
-    .textContent
+    .childNodes[3].childNodes[3].textContent
   fetch('/api/patient/' + patientId)
     .then((response) => response.json())
     .then((data) => {
@@ -262,7 +263,7 @@ function treatmentResults(liveOrDie) {
 function sendToOperatingRoom(event) {
   // console.log(document.getElementById('operatingTable').hasChildNodes())
   if (document.getElementById('operatingTable').hasChildNodes() === false) {
-    const patientId = event.target.getAttribute('data-patientid')
+    const patientId = event.currentTarget.getAttribute('data-patientid')
     fetch('/api/patient/' + patientId, {
       method: 'PATCH',
     })
@@ -271,14 +272,16 @@ function sendToOperatingRoom(event) {
         renderPatientsTable()
         document.getElementById('activityLog').innerHTML = ''
         document.getElementById('operatingTable').innerHTML = `
-      <div style='display: none;'>${data.data.id}</div>
-      <img src=${data.data.profilePhoto} alt="" width="100">
-      <p>First name: ${data.data.firstName}</p>
-      <p>Last name: ${data.data.lastName}</p>
-      <p>Gender: ${data.data.gender}</p>
-      <p>Age: ${data.data.age}</p>
-      <p>Condition: ${data.data.condition}</p>
-      <p>This may sting a little...</p>`
+        <div style="border: none;" class="card mx-auto">
+        <img class="card-img-top" src=${data.data.profilePhoto} alt="Patient in operating room">
+        <div class="card-body">
+          <h4 class="card-title">${data.data.firstName} ${data.data.lastName}</h4>
+          <p hidden class="card-text">${data.data.id}</p>
+          <p class="card-text">Gender: ${data.data.gender}</p>
+          <p class="card-text">Age: ${data.data.age}</p>
+          <p class="card-text">Condition: ${data.data.condition}</p>
+        </div>
+      </div>`
         console.log(data)
       })
   } else {
