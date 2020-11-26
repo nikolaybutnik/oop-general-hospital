@@ -250,10 +250,10 @@ function treatmentResults(liveOrDie) {
       const listElement = document.createElement('li')
       if (liveOrDie <= 5) {
         activityLog.innerHTML = ''
-        listElement.innerHTML = `Procedure to cure ${data.data.condition} failed! ${data.data.firstName} ${data.data.lastName} didn't make it...`
+        listElement.innerHTML = `Procedure to cure ${data.data.condition} failed! ${data.data.firstName} ${data.data.lastName} didn't make it... <i class="fas fa-dizzy"></i>`
       } else {
         activityLog.innerHTML = ''
-        listElement.innerHTML = `Procedure to cure ${data.data.condition} succeeded! ${data.data.firstName} ${data.data.lastName} made a full recovery and was discharged!`
+        listElement.innerHTML = `Procedure to cure ${data.data.condition} succeeded! ${data.data.firstName} ${data.data.lastName} made a full recovery and was discharged! <i class="fas fa-smile-beam"></i>`
       }
       activityLog.appendChild(listElement)
     })
@@ -273,7 +273,7 @@ function sendToOperatingRoom(event) {
         document.getElementById('activityLog').innerHTML = ''
         document.getElementById('operatingTable').innerHTML = `
         <div style="border: none;" class="card mx-auto">
-        <img class="card-img-top" src=${data.data.profilePhoto} alt="Patient in operating room">
+        <img style="max-height: 10rem;" class="card-img-top" src=${data.data.profilePhoto} alt="Patient in operating room">
         <div class="card-body">
           <h4 class="card-title">${data.data.firstName} ${data.data.lastName}</h4>
           <p hidden class="card-text">${data.data.id}</p>
@@ -283,6 +283,11 @@ function sendToOperatingRoom(event) {
         </div>
       </div>`
         console.log(data)
+        const activityLog = document.getElementById('activityLog')
+        const listElement = document.createElement('li')
+        activityLog.innerHTML = ''
+        listElement.innerHTML = `${data.data.firstName} ${data.data.lastName} is ready for surgery. Fingers crossed...`
+        activityLog.appendChild(listElement)
       })
   } else {
     const activityLog = document.getElementById('activityLog')
@@ -333,9 +338,21 @@ document.getElementById('admit').addEventListener('click', function (event) {
     event.preventDefault()
     fetch('/api/patient', {
       method: 'POST',
-    }).then(() => {
-      renderPatientsTable()
     })
+      .then((response) => response.json())
+      .then((data) => {
+        const activityLog = document.getElementById('activityLog')
+        const listElement = document.createElement('li')
+        activityLog.innerHTML = ''
+        if (data.gender === 'male') {
+          listElement.innerHTML = `${data.firstName} ${data.lastName} has arrived. He seems to be suffering from ${data.condition}. Let's fix him up!`
+        } else if (data.gender === 'female') {
+          listElement.innerHTML = `${data.firstName} ${data.lastName} has arrived. She seems to be suffering from ${data.condition}. Let's fix her up!`
+        }
+
+        activityLog.appendChild(listElement)
+        renderPatientsTable()
+      })
   }
 })
 

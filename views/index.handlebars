@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-info">
 
-    <a href="#"><i class="fas fa-clinic-medical fa-3x"></i></a>
-    <span class="navbar-brand mb-0 h1 ">Hospital</span>
+    <a href="#"><img src="/assets/img/hospital-icon.png" alt="Hospital" width="65"></a>
+    <span id="hospitalName" class="navbar-brand mb-0 h1 ">OOP General Hospital</span>
 </nav>
 <br><br>
 <div class="container">
@@ -42,9 +42,9 @@
             <table id="patientsTable">
                 <thead>
                     <tr>
-                        <th class="font-weight-light" width="0">Image</th>
-                        <th class="font-weight-light">First Name</th>
-                        <th class="font-weight-light">Last Name</th>
+                        <th class="font-weight-light" width="70">Image</th>
+                        <th class="font-weight-light" style="min-width: 90px;">First Name</th>
+                        <th class="font-weight-light" style="min-width: 90px;">Last Name</th>
                         <th class="font-weight-light">Gender</th>
                         <th class="font-weight-light">Age</th>
                         <th class="font-weight-light">Condition</th>
@@ -64,12 +64,11 @@
                 <div class="col-6 d-flex flex-column align-items-center text-center">
                     <div class="mt-2" id="trustme"> Trust me, I'm a doctor</div>
                     <img src="surgicalAvator.png" id="doctor" class="img-fluid mx-auto mt-2 d-block" alt="surgeon">
-
                 </div>
                 <!-- col 2 sub row col 2 -->
                 {{!-- This empty div will display the patient on the operating table. --}}
-                <div class="col-6 border">
-                    <div id="operatingTable"></div>
+                <div id="operatingTableContainer" class="col-6 border card-group">
+                    <div class="mx-auto" id="operatingTable"></div>
                 </div>
             </div>
             <!-- end of sub row -->
@@ -78,7 +77,7 @@
             <!-- button to be centered -->
             <main>
                 <div class="button">
-                    <div class="noselect" id="operate">operate</div>
+                    <div class="noselect" id="operate">operate<i class="fas fa-hand-holding-medical"></i></div>
                 </div>
                 <div class="progress-bar"></div>
                 <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
