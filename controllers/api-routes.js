@@ -15,7 +15,6 @@ router.get('/', function (req, res) {
 router.post('/api/patient', async (req, res) => {
   try {
     // const info = await db.Patient.generatePatient()
-    console.log(req.body)
     const createPatient = await db.Patient.create(req.body)
     // console.log(createPatient.dataValues)
     res.status(201).json(createPatient.dataValues)
