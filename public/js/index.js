@@ -325,36 +325,126 @@ function cookTheBooks() {
 // This script handles the submission of the Admit Patient button
 // The event triggers a post request to the /api/patient route to generate
 // a new patient and add them to the database.
-document.getElementById('admit').addEventListener('click', function (event) {
-  if (
-    document.getElementById('myBar').textContent === '100% Capacity reached'
-  ) {
-    const activityLog = document.getElementById('activityLog')
-    const listElement = document.createElement('li')
-    activityLog.innerHTML = ''
-    listElement.innerHTML = 'Maximum waiting room capacity has been reached!'
-    activityLog.appendChild(listElement)
-  } else {
-    event.preventDefault()
-    fetch('/api/patient', {
-      method: 'POST',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const activityLog = document.getElementById('activityLog')
-        const listElement = document.createElement('li')
-        activityLog.innerHTML = ''
-        if (data.gender === 'male') {
-          listElement.innerHTML = `${data.firstName} ${data.lastName} has arrived. He seems to be suffering from ${data.condition}. Let's fix him up!`
-        } else if (data.gender === 'female') {
-          listElement.innerHTML = `${data.firstName} ${data.lastName} has arrived. She seems to be suffering from ${data.condition}. Let's fix her up!`
-        }
+document
+  .getElementById('admit')
+  .addEventListener('click', async function (event) {
+    if (
+      document.getElementById('myBar').textContent === '100% Capacity reached'
+    ) {
+      const activityLog = document.getElementById('activityLog')
+      const listElement = document.createElement('li')
+      activityLog.innerHTML = ''
+      listElement.innerHTML = 'Maximum waiting room capacity has been reached!'
+      activityLog.appendChild(listElement)
+    } else {
+      event.preventDefault()
+      const diseases = [
+        { name: 'Fish Odor Syndrome' },
+        { name: 'Dreaming Rage' },
+        { name: 'Sheep Scarring' },
+        { name: 'Spine Soreness' },
+        { name: 'Lime Feet' },
+        { name: 'Stiffening Anxiety' },
+        { name: 'Numbing Blisters' },
+        { name: 'Frenzied Inflammation' },
+        { name: 'Cat Inflammation' },
+        { name: 'Fading Tumor' },
+        { name: 'Undead Stomach' },
+        { name: 'Pestilent Deficiency' },
+        { name: 'Sage Disease' },
+        { name: 'Explosive Anxiety' },
+        { name: 'Rabid Syphilis' },
+        { name: 'Running Asthma' },
+        { name: 'Creeping Delusions' },
+        { name: 'Aggressive Infertility' },
+        { name: 'Animated Hands' },
+        { name: 'Silent Blight' },
+        { name: 'Exhausting Bronchitis' },
+        { name: 'Marsh Lupus' },
+        { name: 'Horse Anemia' },
+        { name: 'Zombie Ulcers' },
+        { name: 'Shaky Swelling' },
+        { name: 'Frozen Dehydration' },
+        { name: 'Phantom Aching' },
+        { name: 'Weakening Mutation' },
+        { name: 'Jumping Euphoria' },
+        { name: 'Undead Poisoning' },
+        { name: 'Jungle Finger' },
+        { name: 'Delirious Paralysis' },
+        { name: 'Mouse Hands' },
+        { name: 'Wraith Fever' },
+        { name: 'Happy Disease' },
+        { name: 'Sedated Malaria' },
+        { name: 'Grave Rash' },
+        { name: 'Ogre Nausea' },
+        { name: 'Angry Sores' },
+        { name: 'Contagious Sleep Disorder' },
+        { name: 'Trivial Tongue' },
+        { name: 'Wild Warts' },
+        { name: 'Elephant Cannibalism' },
+        { name: 'Stimulated Cramps' },
+        { name: 'Sniffling Fatigue' },
+        { name: 'Pig Irritation' },
+        { name: 'Shivering Hallucinations' },
+        { name: 'Beer Paranoia' },
+        { name: 'Rabid Cholera' },
+      ]
+      const response = await fetch('https://randomuser.me/api/?nat=ca')
+      console.log(response)
 
-        activityLog.appendChild(listElement)
-        renderPatientsTable()
+      const patient = await response.json()
+      // Define  function that generates a random string
+      function seed(length) {
+        let result = ''
+        const characters =
+          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          )
+        }
+        return result
+      }
+      let profilePhoto
+      // Read the gender of generated patient and generate a profile photo
+      if (patient.results[0].gender === 'male') {
+        profilePhoto = `https://avatars.dicebear.com/api/male/${seed(20)}.svg`
+      } else if (patient.results[0].gender === 'female') {
+        profilePhoto = `https://avatars.dicebear.com/api/female/${seed(20)}.svg`
+      }
+      // Get a random health condition from diseases array by generating number.
+      const randNum = Math.floor(Math.random() * diseases.length)
+      const condition = diseases[randNum]
+
+      // Create the new patient object and return it.
+      const newPatient = {
+        profilePhoto: profilePhoto,
+        firstName: patient.results[0].name.first,
+        lastName: patient.results[0].name.last,
+        gender: patient.results[0].gender,
+        age: patient.results[0].dob.age,
+        condition: condition.name,
+      }
+      fetch('/api/patient', {
+        method: 'POST',
+        body: JSON.stringify(newPatient),
       })
-  }
-})
+        .then((response) => response.json())
+        .then((data) => {
+          const activityLog = document.getElementById('activityLog')
+          const listElement = document.createElement('li')
+          activityLog.innerHTML = ''
+          if (data.gender === 'male') {
+            listElement.innerHTML = `${data.firstName} ${data.lastName} has arrived. He seems to be suffering from ${data.condition}. Let's fix him up!`
+          } else if (data.gender === 'female') {
+            listElement.innerHTML = `${data.firstName} ${data.lastName} has arrived. She seems to be suffering from ${data.condition}. Let's fix her up!`
+          }
+
+          activityLog.appendChild(listElement)
+          renderPatientsTable()
+        })
+    }
+  })
 
 // This script handles the submission of the Recovered Patient button (form)
 // The event triggers a post request to the /api/patient route to display
