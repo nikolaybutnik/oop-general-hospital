@@ -58,6 +58,8 @@ module.exports = function (sequelize, DataTypes) {
     static async generatePatient() {
       // Make a request to API to generate a random person
       const response = await fetch('https://randomuser.me/api/?nat=ca')
+      console.log(response)
+
       const patient = await response.json()
       // Define  function that generates a random string
       function seed(length) {
