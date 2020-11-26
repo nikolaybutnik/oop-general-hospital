@@ -6,7 +6,7 @@
 
 OOP General Hospital is a web application that works with a MySQL database behind the scenes to simulate basic patient flow in a hospital environment. The application acts mainly as proof of concept, and is meant to be entertaining and light-hearted.
 
-[Link to application]()
+[Link to application](https://project-team-2.herokuapp.com/)
 
 ![OOP General Hospital Screenshot](https://github.com/ginajonas/oop-general-hospital/blob/main/public/assets/img/oop-general-hospital-screenshot.png?raw=true)
 
@@ -26,7 +26,7 @@ To install the application locally, run `npm install` in the CLI to install all 
 
 ## Usage
 
-To start the application locally, run `node server.js` or `npm run watch` from the CLI. [The app is also hosted on Heroku.](link)
+To start the application locally, run `node server.js` or `npm run watch` from the CLI. [The app is also hosted on Heroku.](https://project-team-2.herokuapp.com/)
 This application simulates a basic hospital environmental by using a MySQL database in the backend to dynamically load and display the relevant groups of patients to the user. The user can perform the following actions by clicking the displayed buttons:
 
 - Waiting Room: This button will access the database, find all patients with a health status of `sick`, and display the patients and relevant information in a table. Each entry will have a `cure` button assigned that will perform an action on that unique patient
