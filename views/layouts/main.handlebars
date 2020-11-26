@@ -28,6 +28,19 @@
 </head>
 
 <body>
+    <section class="background">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+    </section>
     {{{body}}}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -121,6 +134,50 @@
                 operateButtonAnime.play()
             }
         })
+        // Background AnimeJS
+        const backgroundDiv = document.querySelectorAll('section div')
+        console.log(backgroundDiv)
+        let n = 0
+        backgroundDiv.forEach((div) => {
+            div.style.position = 'absolute';
+            div.style.left = n + '%';
+            div.style.width = '10vw';
+            div.style.height = '100vh';
+            div.style.zIndex = '-3'
+            div.style.backgroundColor = 'white';
+            //div.style.display = 'grid';
+            n += 10;
+        })
+
+        const backgroundAnime =
+            anime.timeline({
+                autoplay: false,
+                direction: 'normal',
+            })
+
+        backgroundAnime
+            .add({
+                targets: 'section div',
+                delay: 200,
+                duration: 500,
+                backgroundColor: '#c1e9e9',
+                delay: anime.stagger(100)
+            })
+            .add({
+                targets: 'section div',
+                delay: 200,
+                duration: 500,
+                backgroundColor: '#ffffff',
+                delay: anime.stagger(100)
+            })
+
+        // Background AnimeJS play upon openning up page
+        backgroundAnime.play()
+
+        $('#CleanRecords').click(function () {
+            backgroundAnime.play()
+        })
+
 
     </script>
 </body>
