@@ -19,6 +19,10 @@ html {
   margin-bottom: 10px;
 }
 
+table {
+  margin-bottom: 20px;
+}
+
 #patientsTable {
   border: solid 1px #ddeeee;
   border-collapse: collapse;
@@ -38,12 +42,6 @@ html {
   background-color: #4fcafa;
   color: white;
   text-shadow: 1px 1px 1px #fff;
-  /* background-color: #ddefef;
-  border: solid 1px #ddeeee;
-  color: #336b6b;
-  padding: 10px;
-  text-align: left;
-  text-shadow: 1px 1px 1px #fff; */
 }
 #patientsTable tbody td {
   border: solid 1px #ddeeee;
@@ -68,6 +66,14 @@ html {
 
 body {
   background: white;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+}
+
+#hospitalName {
+  font-weight: 700;
+  color: white;
+  font-size: 30px;
 }
 
 #trustme {
@@ -203,4 +209,21 @@ svg {
   transform: scale(1.3);
   transition: all 0.1s;
   background-color: #00b7ff;
+}
+
+#operatingTableContainer {
+  background-color: #f2f2f2;
+}
+
+li {
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+.card {
+  background-color: #f2f2f2;
 }

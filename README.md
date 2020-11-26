@@ -8,7 +8,7 @@ OOP General Hospital is a web application that works with a MySQL database behin
 
 [Link to application]()
 
-![OOP General Hospital Screenshot](https://github.com/ginajonas/project-2/blob/main/public/assets/img/oop-general-hospital-screenshot.png?raw=true)
+![OOP General Hospital Screenshot](https://github.com/ginajonas/oop-general-hospital/blob/main/public/assets/img/oop-general-hospital-screenshot.png?raw=true)
 
 ## Table of Contents
 
