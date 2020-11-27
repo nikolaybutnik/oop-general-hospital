@@ -1,21 +1,23 @@
-// Reference the Log - Sick button and assign a click event.
+// Reference the Waiting Room button and assign a click event.
 const logSickButton = document.getElementById('logSick')
 logSickButton.addEventListener('click', renderPatientsTable)
-// Reference the Log - Recovered button and assign a click event.
+// Reference the Recovered Patients button and assign a click event.
 const logRecoveredButton = document.getElementById('logRecovered')
 logRecoveredButton.addEventListener('click', renderRecoveredPatientsTable)
-// Reference the Log - Sick button and assign a click event.
+// Reference the Unfortunate Accidents button and assign a click event.
 const logDeadButton = document.getElementById('logDead')
 logDeadButton.addEventListener('click', renderDeadPatientsTable)
 // Reference the Operate button and assign a click event.
 const operateButton = document.getElementById('operate')
 operateButton.addEventListener('click', beginOperation)
+// Reference the Bookkeeper button and assign a click event.
 const wipeRecordsButton = document.getElementById('CleanRecords')
 wipeRecordsButton.addEventListener('click', cookTheBooks)
 
 // Render the sick patients table on page load
 renderPatientsTable()
 
+// A function that renders a table of all patients with 'sick' status.
 function renderPatientsTable() {
   fetch('/api/patient')
     .then((response) => response.json())
@@ -81,6 +83,7 @@ function renderPatientsTable() {
     })
 }
 
+// A function that renders a table of all patients with 'recovered' status.
 function renderRecoveredPatientsTable() {
   fetch('/api/patient')
     .then((response) => response.json())
@@ -132,6 +135,7 @@ function renderRecoveredPatientsTable() {
     })
 }
 
+// A function that renders a table of all patients with 'dead' status.
 function renderDeadPatientsTable() {
   fetch('/api/patient')
     .then((response) => response.json())
@@ -184,18 +188,17 @@ function renderDeadPatientsTable() {
 }
 
 // A function for the 'Cure Patient' button that sets the patient's status from 'sick' to 'recovered' if the
-// operation is a success, but has a 1 in 10 chance of killing the patient.
+// operation is a success, but has a 50/50 chance of killing the patient.
 function beginOperation() {
   const activityLog = document.getElementById('activityLog')
   const operatingTable = document.getElementById('operatingTable')
+  // If the div has a child node, aka if a patient is present in the operating room, proceed with the operation.
   if (operatingTable.hasChildNodes()) {
     const liveOrDie = Math.floor(Math.random() * 10) + 1
-    // console.log(liveOrDie)
-    // If the random number is 1, the patient dies.
+    // If the random number is less than or equal to 5, the patient dies.
     if (liveOrDie <= 5) {
       const patientId = document.getElementById('operatingTable').childNodes[1]
         .childNodes[3].childNodes[3].textContent
-      console.log(patientId)
       fetch('/api/patient/' + patientId, {
         body: JSON.stringify({ healthStatus: 'dead' }),
         headers: {
@@ -211,10 +214,9 @@ function beginOperation() {
           operatingTable.innerHTML = ''
         })
     } else {
-      // If the random number is other than 1, the patient recovers.
+      // If the random number is greater than 5, the patient recovers.
       const patientId = document.getElementById('operatingTable').childNodes[1]
         .childNodes[3].childNodes[3].textContent
-      console.log(patientId)
       fetch('/api/patient/' + patientId, {
         body: JSON.stringify({ healthStatus: 'recovered' }),
         headers: {
@@ -231,6 +233,7 @@ function beginOperation() {
         })
     }
   } else {
+    // If the div has no patient present, prompt the user to send one.
     const listElement = document.createElement('li')
     activityLog.innerHTML = ''
     listElement.innerHTML = 'Bring in the next patient!'
@@ -245,7 +248,6 @@ function treatmentResults(liveOrDie) {
   fetch('/api/patient/' + patientId)
     .then((response) => response.json())
     .then((data) => {
-      // console.log(data)
       const activityLog = document.getElementById('activityLog')
       const listElement = document.createElement('li')
       if (liveOrDie <= 5) {
@@ -261,7 +263,7 @@ function treatmentResults(liveOrDie) {
 
 // Function that takes a patient from the waiting area and sends them to the operating room.
 function sendToOperatingRoom(event) {
-  // console.log(document.getElementById('operatingTable').hasChildNodes())
+  // If the div has no child nodes, proceed with sendint the patient in.
   if (document.getElementById('operatingTable').hasChildNodes() === false) {
     const patientId = event.currentTarget.getAttribute('data-patientid')
     fetch('/api/patient/' + patientId, {
@@ -282,7 +284,6 @@ function sendToOperatingRoom(event) {
           <p class="card-text">Condition: ${data.data.condition}</p>
         </div>
       </div>`
-        console.log(data)
         const activityLog = document.getElementById('activityLog')
         const listElement = document.createElement('li')
         activityLog.innerHTML = ''
@@ -290,6 +291,7 @@ function sendToOperatingRoom(event) {
         activityLog.appendChild(listElement)
       })
   } else {
+    // If the div already has a patient, notify the user.
     const activityLog = document.getElementById('activityLog')
     const listElement = document.createElement('li')
     activityLog.innerHTML = ''
@@ -298,6 +300,7 @@ function sendToOperatingRoom(event) {
   }
 }
 
+// Function that wipes the records of all patients with 'dead' status.
 function cookTheBooks() {
   const activityLog = document.getElementById('activityLog')
   fetch('/api/patient/', {
@@ -305,7 +308,6 @@ function cookTheBooks() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       if (data.length === 0) {
         const listElement = document.createElement('li')
         activityLog.innerHTML = ''
@@ -390,7 +392,6 @@ document
         { name: 'Rabid Cholera' },
       ]
       const response = await fetch('https://randomuser.me/api/?nat=ca')
-      console.log(response)
 
       const patient = await response.json()
       // Define  function that generates a random string
@@ -461,7 +462,6 @@ document
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     }).then((response) => {
-      // console.log(response)
       renderRecoveredPatientsTable()
     })
   })
@@ -475,7 +475,6 @@ document.getElementById('logDead').addEventListener('submit', function (event) {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
-    // console.log(response)
     renderDeadPatientsTable()
   })
 })
@@ -492,16 +491,12 @@ async function updateCapacityBar() {
   const sickpatients = await allpatients.filter(
     (patient) => patient.healthStatus === 'sick'
   )
-  // console.log(allpatients)
-  // console.log(sickpatients)
   // Set the maximum capacity of the hospital.
   const maxCapacity = 10
   // caclulate the percentage of currently sick patients that occupy the hospital.
   const percentage = Math.ceil((sickpatients.length / maxCapacity) * 100)
-
   const elem = document.getElementById('myBar')
   const width = percentage
-
   if (percentage < 100) {
     elem.style.width = width + '%'
     elem.style.backgroundColor = '#23adad'

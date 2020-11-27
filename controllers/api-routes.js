@@ -14,9 +14,7 @@ router.get('/', function (req, res) {
 // Define an api route to generate new patient.
 router.post('/api/patient', async (req, res) => {
   try {
-    // const info = await db.Patient.generatePatient()
     const createPatient = await db.Patient.create(req.body)
-    // console.log(createPatient.dataValues)
     res.status(201).json(createPatient.dataValues)
   } catch (err) {
     if (err) {
@@ -30,7 +28,6 @@ router.get('/api/patient', async (req, res) => {
   try {
     const info = await db.Patient.findAll()
     const infoParsed = info.map((element) => element.dataValues)
-    // console.log(infoParsed)
     res.status(200).json(infoParsed)
   } catch (err) {
     if (err) {
@@ -41,7 +38,6 @@ router.get('/api/patient', async (req, res) => {
 
 router.put('/api/patient/:id', (req, res) => {
   const patientId = req.params.id
-  // console.log(req.body.healthStatus)
   // If {healthStatus: recovered}, update the patient in the database with a recovered status.
   try {
     if (req.body.healthStatus === 'recovered') {
@@ -71,14 +67,12 @@ router.put('/api/patient/:id', (req, res) => {
 router.patch('/api/patient/:id', async (req, res) => {
   const patientId = await req.params.id
   const targetPatient = await db.Patient.findOne({ where: { id: patientId } })
-  // console.log(targetPatient.dataValues)
   try {
     db.Patient.update(
       { healthStatus: 'operating' },
       { where: { id: patientId } }
     ).then((patient) => {
       res.status(200).json({ data: targetPatient.dataValues })
-      // console.log(targetPatient.dataValues)
     })
   } catch (err) {
     if (err) {
@@ -92,7 +86,6 @@ router.get('/api/patient/:id', async (req, res) => {
   try {
     const patientId = await req.params.id
     const targetPatient = await db.Patient.findOne({ where: { id: patientId } })
-    console.log(targetPatient.dataValues)
     res.status(200).json({ data: targetPatient.dataValues })
   } catch (err) {
     if (err) {
@@ -113,7 +106,6 @@ router.delete('/api/patient', async (req, res) => {
     rip.forEach((element) => {
       ripArray.push(element.dataValues)
     })
-    // console.log(ripArray)
     db.Patient.destroy({
       where: {
         healthStatus: 'dead',
