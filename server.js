@@ -11,9 +11,9 @@ const app = express()
 app.use(express.static('public'))
 
 // Set up the Express app to handle data parsing
+app.use(compression())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(compression())
 
 // Set up the Express app to use the Handlebars template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
