@@ -1,32 +1,107 @@
-# OOP General Hospital
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <!-- <a href="https://github.com/nikolaybutnik/star-academy">
+    <img src="./client/src/Assets/staracademyIcon.png" alt="Logo" width="50" height="50">
+  </a> -->
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  <h3 align="center">OOP General Hospital</h3>
 
-## Description
+  <p align="center">
+    Object Oriented Programming Hospital Simulation
+    <br />
+    <a href="https://github.com/nikolaybutnik/oop-general-hospital"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://mysterious-brushlands-46606.herokuapp.com/">View Demo</a>
+    ·
+    <a href="https://github.com/nikolaybutnik/oop-general-hospital/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/nikolaybutnik/oop-general-hospital/issues">Request Feature</a>
+  </p>
+</p>
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+![OOP General Hospital Screenshot](https://github.com/nikolaybutnik/oop-general-hospital/blob/main/public/assets/img/oop-general-hospital-screenshot.png?raw=true)
 
 OOP General Hospital is a web application that works with a MySQL database behind the scenes to simulate basic patient flow in a hospital environment. The application acts mainly as proof of concept, and is meant to be entertaining and light-hearted.
 
-[Link to application](https://mysterious-brushlands-46606.herokuapp.com/)
+### Built With
 
-![OOP General Hospital Screenshot](https://github.com/ginajonas/oop-general-hospital/blob/main/public/assets/img/oop-general-hospital-screenshot.png?raw=true)
+The following technologies and libraries were used in the creation of OOP General Hospital:
 
-## Table of Contents
+- [Random User Generator](https://randomuser.me/) - This API was used to generate an object with a variety of randomized information. These objects are the patients in the application.
+- [DiceBear Avatars](https://avatars.dicebear.com/) - This API was used to randomly generate a pixel-art profile photo for each patient.
+- [Anime.js](https://animejs.com/) - This JavaScript library was used to apply a variety of animations to buttons.
+- [JavaScript](https://www.javascript.com/) - The programming language the application was written in.
+- [Handlebars](https://handlebarsjs.com/) - Templating engine used for HTML.
+- [Express](https://expressjs.com/) - Web framework for Node.js.
+- [Sequelize ORM](https://sequelize.org/) - Node.js ORM for MySQL integration.
+- [MySQL](https://www.mysql.com/) - Database management system.
 
-1. [Installation](#Installation)
-2. [Usage](#Usage)
-3. [Built With](#Built-With)
-4. [License](#License)
-5. [Contributing](#Contributing)
-6. [Tests](#Tests)
-7. [Questions](#Questions)
+<!-- GETTING STARTED -->
 
-## Installation
+## Getting Started
 
-To install the application locally, run `npm install` in the CLI to install all dependencies required to run it. Navigate to `./config/config.json` and in the development section ensure that all information matches the local database environment. Refer to the [Usage section](#Usage) for information on how to use the application.
+To get a local copy up and running, follow these steps.
+
+### Prerequisites
+
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
+- MySQL
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/nikolaybutnik/star-academy
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Navigate to `./config/config.json` and in the development section ensure that all information matches the local database environment.
+4. You're ready to go!
+   ```sh
+   npm start
+   ```
+
+<!-- USAGE EXAMPLES -->
 
 ## Usage
 
-To start the application locally, run `node server.js` or `npm run watch` from the CLI. [The app is also hosted on Heroku.](https://mysterious-brushlands-46606.herokuapp.com/)
 This application simulates a basic hospital environmental by using a MySQL database in the backend to dynamically load and display the relevant groups of patients to the user. The user can perform the following actions by clicking the displayed buttons:
 
 - Waiting Room: This button will access the database, find all patients with a health status of `sick`, and display the patients and relevant information in a table. Each entry will have a `cure` button assigned that will perform an action on that unique patient
@@ -39,34 +114,44 @@ This application simulates a basic hospital environmental by using a MySQL datab
 
 The basic application flow is to admit a patient (up to 10) with the `Admit Patient` button, send a patient to the operating room with the `cure button`, and perform a procedure with the `operate`. The results of the user's actions and success/failure of a treatment will be displayed as a message.
 
-## Built With
+<!-- ROADMAP -->
 
-The following technologies have been used in the creation of OOP General Hospital.
+## Roadmap
 
-- [Random User Generator](https://randomuser.me/) - This API was used to generate an object with a variety of randomized information. These objects are the patients in the application.
-- [DiceBear Avatars](https://avatars.dicebear.com/) - This API was used to randomly generate a pixel-art profile photo for each patient.
-- [Anime.js](https://animejs.com/) - This JavaScript library was used to apply a variety of animations to buttons.
-- [JavaScript](https://www.javascript.com/) - The programming language the application was written in.
-- [Handlebars](https://handlebarsjs.com/) - Templating engine used for HTML.
-- [Express](https://expressjs.com/) - Web framework for Node.js.
-- [Sequelize ORM](https://sequelize.org/) - Node.js ORM for MySQL integration.
-- [MySQL](https://www.mysql.com/) - Database management system.
+See the [open issues](https://github.com/nikolaybutnik/oop-general-hospital/issues) for a list of proposed features (and known issues).
 
-## License
-
-This project is covered under the MIT license. To find out what is permitted under this license, click the license badge at the top of the README.
+<!-- CONTRIBUTING -->
 
 ## Contributing
 
-Feel free to submit any pull requests. All pull requests will be considered.
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Tests
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-No tests are currently written for this application.
+<!-- LICENSE -->
 
-## Questions
+## License
 
-This project is a joint effort and the following collaborators may be contacted with questions regarded to this project:  
-[Nikolay Butnik email address](mailto:btnk.nik@gmail.com) and [GitHub profile](https://github.com/nikolaybutnik)  
-[Gina Jonas email address](mailto:ginajonas7@gmail.com) and [GitHub profile](https://github.com/ginajonas)  
-[Ziyong He email address](mailto:ziyonghe94@gmail.com) and [GitHub profile](https://github.com/ZiyongHe)
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<!-- CONTACT -->
+
+## Contact
+
+Nikolay Butnik - [LinkedIn](https://www.linkedin.com/in/nikolay-butnik/) - btnk.nik@gmail.com
+
+Gerogina Jonas - [LinkedIn](https://www.linkedin.com/in/georgina-jonas-1796531b3/) - ginajonas7@gmail.com
+
+Ziyong He - [LinkedIn](https://www.linkedin.com/in/ziyonghe/) - ziyonghe94@gmail.com
+
+<!-- ACKNOWLEDGEMENTS -->
+
+## Acknowledgements
+
+- [Choose an Open Source License](https://choosealicense.com)
+- [Font Awesome](https://fontawesome.com)
+- [Heroku](https://heroku.com)
